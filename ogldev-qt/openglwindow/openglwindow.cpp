@@ -1,4 +1,4 @@
-#include "openglwindow.h"
+#include "openglwindow/openglwindow.h"
 
 #include <QtCore/QCoreApplication>
 
@@ -117,4 +117,3 @@ void OpenGLWindow::setAnimating(bool animating)
         renderLater();
 }
 //! [5]
-
