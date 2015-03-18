@@ -37,14 +37,14 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-
-#include "openglwindow.h"
+#include "openglwindow/openglwindow.h"
 
 #include <QtGui/QGuiApplication>
 #include <QtGui/QMatrix4x4>
 #include <QtGui/QOpenGLShaderProgram>
 #include <QtGui/QScreen>
 #include <QtCore/qmath.h>
+
 
 
 //继承一个QT的OPENGL窗口类，我们用透过它来绘制图像以及使用Opengl的相关函数，如果你需要在别的类里使用opengl的功能，
@@ -75,6 +75,9 @@ private:
 TriangleWindow::TriangleWindow()
     : m_program(0)
     , m_frame(0)
+    , m_vbo(0)
+    , m_vao(0)
+    , c_vbo(0)
 {
     setTitle("qt_ogldev");
 }
@@ -84,6 +87,10 @@ TriangleWindow::TriangleWindow()
 //上传到显卡上，这样好处是减少对显卡传输的数据的负载，减少显卡占用带宽.
 void TriangleWindow::initVBO()
 {
+    //test by liao ('glGenVertexArrays' was not declared in this scope)
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
+
     glGenVertexArrays(1,&m_vao);
     glBindVertexArray(m_vao);
     //先创建一个vbo对象，创建成功后,m_vbo的值就会被修改成一个对象索引，诸如1,2,3,4之类
