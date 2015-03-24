@@ -88,11 +88,10 @@ TriangleWindow::TriangleWindow()
 void TriangleWindow::initVBO()
 {
     //test by liao ('glGenVertexArrays' was not declared in this scope)
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_COLOR_ARRAY);
 
-    glGenVertexArrays(1,&m_vao);
-    glBindVertexArray(m_vao);
+    //glGenVertexArrays(1,&m_vao);
+    //glBindVertexArray(m_vao);
+
     //先创建一个vbo对象，创建成功后,m_vbo的值就会被修改成一个对象索引，诸如1,2,3,4之类
     glGenBuffers (1,&m_vbo);
     //切记Opengl是状态机，我们要先绑定这个VBO,参数GL_ARRAY_BUFFER的意思就是告诉我们，
@@ -103,30 +102,27 @@ void TriangleWindow::initVBO()
     //下面的数组是一个顶点的坐标，三位一组，表示一个三角形的顶点.
     GLfloat vertices[] = {
         -0.7f, -0.7f,0.0f,
-        0.7f, -0.7f,0.0f,
-        0.0f, 0.7f,0.0f
+        0.0f, 0.7f,0.0f,
+        0.7f, -0.7f,0.0f
+     };
 
-    };
     GLfloat colors[] = {
         1.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 1.0f
     };
     //把如上表示的数据，上传到m_vbo在显卡占用的内存中.
-    glBufferData (GL_ARRAY_BUFFER,sizeof(vertices),vertices,GL_STATIC_DRAW);
-    //绑定我们的VBO
-    //glBindBuffer (GL_ARRAY_BUFFER,m_vbo);
+    glBufferData(GL_ARRAY_BUFFER,sizeof(vertices),vertices,GL_STATIC_DRAW);
     //注意最后一个参数是0，因为最后的这个地址，是根据在该VBO的内存空间里计算的，我们只存了顶点,
     //没几把存别的，所以以零开始，三位一组.
+    glEnableVertexAttribArray(m_posAttr);
     glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
     glGenBuffers(1,&c_vbo);
     glBindBuffer (GL_ARRAY_BUFFER,c_vbo);
     glBufferData(GL_ARRAY_BUFFER,sizeof(colors),colors,GL_STATIC_DRAW);
-    glVertexAttribPointer(m_colAttr,3, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(m_posAttr);
     glEnableVertexAttribArray(m_colAttr);
-
+    glVertexAttribPointer(m_colAttr,3, GL_FLOAT, GL_FALSE, 0, 0);
 
 }
 
@@ -177,6 +173,7 @@ void TriangleWindow::loadShader()
     m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShaderSource);
     m_program->link();
     m_posAttr = m_program->attributeLocation("posAttr");
+    m_colAttr = m_program->attributeLocation("colAttr");
     m_matrixUniform = m_program->uniformLocation("matrix");
 }
 
@@ -184,7 +181,7 @@ void TriangleWindow::initialize()
 {
     loadShader();
     initVBO();
-    //glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
 //! [4]
 
@@ -204,18 +201,22 @@ void TriangleWindow::render()
     //传一个矩阵给shader，这里我们让矩阵根据时间变化进行了rotate，
     //可以看到一个旋转的三角形
     QMatrix4x4 matrix;
-    //matrix.rotate (m_frame,QVector3D(0,0,1));
-    //m_program->setUniformValue(m_matrixUniform, matrix);
     matrix.perspective(60.0f, 4.0f/3.0f, 0.1f, 100.0f);
     matrix.translate(0, 0, -2);
-    matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0, 1, 0);
+    //matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0, 1, 0);
+
     m_program->setUniformValue(m_matrixUniform, matrix);
 
-    glBindVertexArray(m_vao);
+    //glBindVertexArray(m_vao);
+
+    //glBindBuffer (GL_ARRAY_BUFFER,m_vbo);
+    //glBindBuffer (GL_ARRAY_BUFFER,c_vbo);
+
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
-    //glDisableVertexAttribArray(1);
-   //glDisableVertexAttribArray(0);
+    //渲染完毕，关闭顶点属性数组
+    //glDisableVertexAttribArray(m_posAttr);
+    //glDisableVertexAttribArray(m_colAttr);
 
     m_program->release();
 
