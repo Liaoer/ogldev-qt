@@ -169,8 +169,8 @@ static const char *fragmentShaderSource =
 void TriangleWindow::loadShader()
 {
     m_program = new QOpenGLShaderProgram(this); // 创建个着色器对象
-    m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShaderSource); // 编译及绑定
-    m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShaderSource);
+    m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader.vs"); // 编译及绑定
+    m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/fshader.fs");
     m_program->link();
     m_posAttr = m_program->attributeLocation("posAttr"); // 绑定和获取一个顶点属性的位置
     m_colAttr = m_program->attributeLocation("colAttr");
@@ -209,9 +209,6 @@ void TriangleWindow::render()
     m_program->setUniformValue(m_matrixUniform, matrix);
 
     //glBindVertexArray(m_vao);
-
-    //glBindBuffer (GL_ARRAY_BUFFER,m_vbo);
-    //glBindBuffer (GL_ARRAY_BUFFER,c_vbo);
 
     glDrawArrays(GL_TRIANGLES, 0, 3);
 

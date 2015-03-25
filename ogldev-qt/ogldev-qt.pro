@@ -13,8 +13,15 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    openglwindow/openglwindow.cpp
+    openglwindow/openglwindow.cpp \
+    utility.cpp
 
 HEADERS  += \
     openglwindow/openglwindow.h \
-    base/math_3d.h
+    base/math_3d.h \
+    utility.h
+
+RESOURCES += \
+    shader.qrc
+
+DISTFILES +=
