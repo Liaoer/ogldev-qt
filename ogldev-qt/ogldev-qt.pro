@@ -14,12 +14,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     openglwindow/openglwindow.cpp \
-    utility.cpp
+    utility.cpp \
+    base/mainwidget.cpp
 
 HEADERS  += \
     openglwindow/openglwindow.h \
     base/math_3d.h \
-    utility.h
+    utility.h \
+    base/mainwidget.h
 
 RESOURCES += \
     shader.qrc
