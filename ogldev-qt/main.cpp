@@ -37,6 +37,7 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+
 #include "openglwindow/openglwindow.h"
 
 #include <QtGui/QGuiApplication>
@@ -105,7 +106,6 @@ void TriangleWindow::initVBO()
         0.0f, 0.7f,0.0f,
         0.7f, -0.7f,0.0f
      };
-
     GLfloat colors[] = {
         1.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f,
@@ -168,11 +168,11 @@ static const char *fragmentShaderSource =
 //用原版的GL函数也是可以的.
 void TriangleWindow::loadShader()
 {
-    m_program = new QOpenGLShaderProgram(this);
-    m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShaderSource);
+    m_program = new QOpenGLShaderProgram(this); // 创建个着色器对象
+    m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShaderSource); // 编译及绑定
     m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShaderSource);
     m_program->link();
-    m_posAttr = m_program->attributeLocation("posAttr");
+    m_posAttr = m_program->attributeLocation("posAttr"); // 绑定和获取一个顶点属性的位置
     m_colAttr = m_program->attributeLocation("colAttr");
     m_matrixUniform = m_program->uniformLocation("matrix");
 }
@@ -200,6 +200,7 @@ void TriangleWindow::render()
 
     //传一个矩阵给shader，这里我们让矩阵根据时间变化进行了rotate，
     //可以看到一个旋转的三角形
+
     QMatrix4x4 matrix;
     matrix.perspective(60.0f, 4.0f/3.0f, 0.1f, 100.0f);
     matrix.translate(0, 0, -2);
