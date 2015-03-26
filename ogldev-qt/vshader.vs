@@ -1,11 +1,8 @@
-#version 330
-in vec4 posAttr;
-in vec4 colAttr;
-out vec4 col;
-uniform mat4 matrix;
-
-void main()
-{
+attribute highp vec4 posAttr;
+attribute lowp vec4 colAttr;
+varying lowp vec4 col;
+uniform highp mat4 matrix;
+void main() {
     col = colAttr;
     gl_Position = matrix * posAttr;
 }

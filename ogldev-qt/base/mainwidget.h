@@ -2,7 +2,7 @@
 #define MAINWIDGET_H
 
 
-#include <QGLWidget>
+//#include <QGLWidget>
 
 class MainWidget
 {

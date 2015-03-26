@@ -88,8 +88,6 @@ TriangleWindow::TriangleWindow()
 //上传到显卡上，这样好处是减少对显卡传输的数据的负载，减少显卡占用带宽.
 void TriangleWindow::initVBO()
 {
-    //test by liao ('glGenVertexArrays' was not declared in this scope)
-
     //glGenVertexArrays(1,&m_vao);
     //glBindVertexArray(m_vao);
 
@@ -102,9 +100,9 @@ void TriangleWindow::initVBO()
 
     //下面的数组是一个顶点的坐标，三位一组，表示一个三角形的顶点.
     GLfloat vertices[] = {
-        -0.7f, -0.7f,0.0f,
-        0.0f, 0.7f,0.0f,
-        0.7f, -0.7f,0.0f
+        -0.7f, -0.7f,0,
+        0.0f, 0.7f,0,
+        0.7f, -0.7f,0
      };
     GLfloat colors[] = {
         1.0f, 0.0f, 0.0f,
@@ -142,27 +140,8 @@ int main(int argc, char **argv)
 
     return app.exec();
 }
-//! [2]
 
 
-
-//! [3]
-static const char *vertexShaderSource =
-    "attribute highp vec4 posAttr;\n"
-    "attribute lowp vec4 colAttr;\n"
-    "varying lowp vec4 col;\n"
-    "uniform highp mat4 matrix;\n"
-    "void main() {\n"
-    "   col = colAttr;\n"
-    "   gl_Position = matrix * posAttr;\n"
-    "}\n";
-
-static const char *fragmentShaderSource =
-    "varying lowp vec4 col;\n"
-    "void main() {\n"
-    "   gl_FragColor = col;\n"
-    "}\n";
-//! [3]
 
 //载入shader，这里没有直接使用Opengl的函数，而是使用了Qt对GL的辅助库来装载Shader，当然
 //用原版的GL函数也是可以的.
@@ -181,7 +160,7 @@ void TriangleWindow::initialize()
 {
     loadShader();
     initVBO();
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 //! [4]
 
