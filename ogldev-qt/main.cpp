@@ -106,8 +106,8 @@ void TriangleWindow::initVBO()
      };
     GLfloat colors[] = {
         1.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 1.0f
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f
     };
     //把如上表示的数据，上传到m_vbo在显卡占用的内存中.
     glBufferData(GL_ARRAY_BUFFER,sizeof(vertices),vertices,GL_STATIC_DRAW);
@@ -116,11 +116,11 @@ void TriangleWindow::initVBO()
     glEnableVertexAttribArray(m_posAttr);
     glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-    glGenBuffers(1,&c_vbo);
-    glBindBuffer (GL_ARRAY_BUFFER,c_vbo);
-    glBufferData(GL_ARRAY_BUFFER,sizeof(colors),colors,GL_STATIC_DRAW);
-    glEnableVertexAttribArray(m_colAttr);
-    glVertexAttribPointer(m_colAttr,3, GL_FLOAT, GL_FALSE, 0, 0);
+    //glGenBuffers(1,&c_vbo);
+    //glBindBuffer (GL_ARRAY_BUFFER,c_vbo);
+    //glBufferData(GL_ARRAY_BUFFER,sizeof(colors),colors,GL_STATIC_DRAW);
+    //glEnableVertexAttribArray(m_colAttr);
+    //glVertexAttribPointer(m_colAttr,3, GL_FLOAT, GL_FALSE, 0, 0);
 
 }
 
@@ -160,7 +160,6 @@ void TriangleWindow::initialize()
 {
     loadShader();
     initVBO();
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 //! [4]
 
@@ -188,6 +187,7 @@ void TriangleWindow::render()
     m_program->setUniformValue(m_matrixUniform, matrix);
 
     //glBindVertexArray(m_vao);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
