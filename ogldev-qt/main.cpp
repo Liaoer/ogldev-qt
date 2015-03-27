@@ -58,6 +58,7 @@ public:
     void initialize() Q_DECL_OVERRIDE;
     void render() Q_DECL_OVERRIDE;
     void initVBO();
+    void CreateIndexBuffer();
 private:
     void loadShader();
 
@@ -70,6 +71,7 @@ private:
     GLuint m_vbo;
     GLuint m_vao;
     GLuint c_vbo;
+    GLuint IBO;
 };
 
 //构造函数，只是给一些成员变量一些初始值，毛用都没有
@@ -100,14 +102,16 @@ void TriangleWindow::initVBO()
 
     //下面的数组是一个顶点的坐标，三位一组，表示一个三角形的顶点.
     GLfloat vertices[] = {
-        -0.7f, -0.7f,0,
-        0.0f, 0.7f,0,
-        0.7f, -0.7f,0
+        -0.7f, -0.7f,0.0f,
+        0.0f, -0.7f,0.7f,
+        0.7f, -0.7f,0.0f,
+        0.0f, 0.7f, 0.0f
      };
     GLfloat colors[] = {
         1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f
+        0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 1.0f,
+        1.0f, 1.0f, 1.0f
     };
     //把如上表示的数据，上传到m_vbo在显卡占用的内存中.
     glBufferData(GL_ARRAY_BUFFER,sizeof(vertices),vertices,GL_STATIC_DRAW);
@@ -116,12 +120,27 @@ void TriangleWindow::initVBO()
     glEnableVertexAttribArray(m_posAttr);
     glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-    //glGenBuffers(1,&c_vbo);
-    //glBindBuffer (GL_ARRAY_BUFFER,c_vbo);
-    //glBufferData(GL_ARRAY_BUFFER,sizeof(colors),colors,GL_STATIC_DRAW);
-    //glEnableVertexAttribArray(m_colAttr);
-    //glVertexAttribPointer(m_colAttr,3, GL_FLOAT, GL_FALSE, 0, 0);
+    glGenBuffers(1,&c_vbo);
+    glBindBuffer (GL_ARRAY_BUFFER,c_vbo);
+    glBufferData(GL_ARRAY_BUFFER,sizeof(colors),colors,GL_STATIC_DRAW);
+    //启用VAO中对应的顶点属性数组
+    glEnableVertexAttribArray(m_colAttr);
+    //给对应的顶点属性数组指定数据
+    glVertexAttribPointer(m_colAttr,3, GL_FLOAT, GL_FALSE, 0, 0);
 
+    CreateIndexBuffer();
+}
+
+void TriangleWindow::CreateIndexBuffer()
+{
+    unsigned int Indices[] = { 0, 3, 1,
+                               1, 3, 2,
+                               2, 3, 0,
+                               0, 1, 2 };
+
+    glGenBuffers(1, &IBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices), Indices, GL_STATIC_DRAW);
 }
 
 int main(int argc, char **argv)
@@ -163,6 +182,7 @@ void TriangleWindow::initialize()
 }
 //! [4]
 
+
 //该函数是渲染部分，每帧都会调用
 void TriangleWindow::render()
 {
@@ -178,18 +198,26 @@ void TriangleWindow::render()
 
     //传一个矩阵给shader，这里我们让矩阵根据时间变化进行了rotate，
     //可以看到一个旋转的三角形
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+    //glDisable(GL_CULL_FACE);
+
+
 
     QMatrix4x4 matrix;
     matrix.perspective(60.0f, 4.0f/3.0f, 0.1f, 100.0f);
     matrix.translate(0, 0, -2);
-    //matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0, 1, 0);
+    matrix.scale(2.0f);
+    matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0, 1, 0);
 
     m_program->setUniformValue(m_matrixUniform, matrix);
 
     //glBindVertexArray(m_vao);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    //顺序的draw调用
+    //glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
 
     //渲染完毕，关闭顶点属性数组
     //glDisableVertexAttribArray(m_posAttr);
