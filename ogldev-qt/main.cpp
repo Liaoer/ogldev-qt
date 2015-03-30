@@ -62,6 +62,10 @@ public:
 private:
     void loadShader();
 
+    QVector3D CameraPos;
+    QVector3D CameraTarget;
+    QVector3D CameraUp;
+
     GLuint m_posAttr;
     GLuint m_colAttr;
     GLuint m_matrixUniform;
@@ -102,10 +106,10 @@ void TriangleWindow::initVBO()
 
     //下面的数组是一个顶点的坐标，三位一组，表示一个三角形的顶点.
     GLfloat vertices[] = {
-        -0.7f, -0.7f,0.0f,
-        0.0f, -0.7f,0.7f,
-        0.7f, -0.7f,0.0f,
-        0.0f, 0.7f, 0.0f
+        -1.0f, -1.0f, 0.5773f,
+        0.0f, -1.0f, -1.15475f,
+        1.0f, -1.0f, 0.5773f,
+        0.0f, 1.0f, 0.0f
      };
     GLfloat colors[] = {
         1.0f, 0.0f, 0.0f,
@@ -203,11 +207,15 @@ void TriangleWindow::render()
     //glDisable(GL_CULL_FACE);
 
 
+    CameraPos = QVector3D(1.0f, 1.0f, -3.0f);
+    CameraTarget = QVector3D(0.45f, 0.0f, 1.0f);
+    CameraUp = QVector3D(0.0f, 1.0f, 0.0f);
 
     QMatrix4x4 matrix;
     matrix.perspective(60.0f, 4.0f/3.0f, 0.1f, 100.0f);
     matrix.translate(0, 0, -2);
-    matrix.scale(2.0f);
+    matrix.scale(1.0);
+    matrix.lookAt(CameraPos,CameraTarget,CameraUp);
     matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0, 1, 0);
 
     m_program->setUniformValue(m_matrixUniform, matrix);
