@@ -106,9 +106,9 @@ void TriangleWindow::initVBO()
 
     //下面的数组是一个顶点的坐标，三位一组，表示一个三角形的顶点.
     GLfloat vertices[] = {
-        -1.0f, -1.0f, 0.5773f,
-        0.0f, -1.0f, -1.15475f,
-        1.0f, -1.0f, 0.5773f,
+        -1.0f, -1.0f, 0.7f,
+        0.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, 0.7f,
         0.0f, 1.0f, 0.0f
      };
     GLfloat colors[] = {
