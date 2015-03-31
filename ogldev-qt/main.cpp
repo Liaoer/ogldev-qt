@@ -202,7 +202,7 @@ void TriangleWindow::render()
 
     //传一个矩阵给shader，这里我们让矩阵根据时间变化进行了rotate，
     //可以看到一个旋转的三角形
-    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     //glDisable(GL_CULL_FACE);
 
