@@ -2,9 +2,16 @@
 #define MAINWIDGET_H
 
 
-//#include <QGLWidget>
+#include <QOpenGLWidget>
+#include <QOpenGLFunctions>
+#include <QMatrix4x4>
+#include <QQuaternion>
+#include <QVector2D>
+#include <QBasicTimer>
+#include <QOpenGLShaderProgram>
+#include <QOpenGLTexture>
 
-class MainWidget
+class MainWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
 public:
     MainWidget();
