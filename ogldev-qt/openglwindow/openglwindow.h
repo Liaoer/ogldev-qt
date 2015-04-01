@@ -36,6 +36,7 @@ protected:
     void exposeEvent(QExposeEvent *event) Q_DECL_OVERRIDE;
 
 private:
+
     bool m_update_pending;
     bool m_animating;
 

@@ -116,4 +116,6 @@ void OpenGLWindow::setAnimating(bool animating)
     if (animating)
         renderLater();
 }
+
+
 //! [5]
