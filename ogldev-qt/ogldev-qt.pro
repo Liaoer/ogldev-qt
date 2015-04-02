@@ -7,6 +7,8 @@
 QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+QMAKE_CXXFLAGS += -std=c++11
+
 TARGET = ogldev-qt
 TEMPLATE = app
 
@@ -14,13 +16,13 @@ TEMPLATE = app
 SOURCES += main.cpp \
     openglwindow/openglwindow.cpp \
     utility.cpp \
-    base/mainwidget.cpp
+    base/camera.cpp
 
 HEADERS  += \
     openglwindow/openglwindow.h \
     base/math_3d.h \
     utility.h \
-    base/mainwidget.h
+    base/camera.h
 
 RESOURCES += \
     shader.qrc
@@ -28,3 +30,6 @@ RESOURCES += \
 DISTFILES +=
 
 QT += opengl
+
+INCLUDEPATH += \
+    /Users/Shared/include/boost/
