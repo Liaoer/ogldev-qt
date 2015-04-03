@@ -4,6 +4,11 @@
 
 #include <QtGui/QWindow>
 #include <QtGui/QOpenGLFunctions>
+#include <QtCore/QCoreApplication>
+
+#include <QtGui/QOpenGLContext>
+#include <QtGui/QOpenGLPaintDevice>
+#include <QtGui/QPainter>
 
 QT_BEGIN_NAMESPACE
 class QPainter;

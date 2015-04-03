@@ -19,14 +19,16 @@ SOURCES += main.cpp \
     openglwindow/openglwindow.cpp \
     utility.cpp \
     base/camera.cpp \
-    base/mainwidget.cpp
+    base/mainwidget.cpp \
+    trianglewindow.cpp
 
 HEADERS  += \
     openglwindow/openglwindow.h \
     base/math_3d.h \
     utility.h \
     base/camera.h \
-    base/mainwidget.h
+    base/mainwidget.h \
+    trianglewindow.h
 
 RESOURCES += \
     shader.qrc

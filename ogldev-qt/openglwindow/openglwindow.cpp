@@ -1,10 +1,6 @@
 #include "openglwindow/openglwindow.h"
 
-#include <QtCore/QCoreApplication>
 
-#include <QtGui/QOpenGLContext>
-#include <QtGui/QOpenGLPaintDevice>
-#include <QtGui/QPainter>
 
 //! [1]
 OpenGLWindow::OpenGLWindow(QWindow *parent)
