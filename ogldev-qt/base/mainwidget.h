@@ -16,12 +16,14 @@ class MainWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
      Q_OBJECT
 public:
-    MainWidget();
+    explicit MainWidget(QWindow *parent = 0);
     ~MainWidget();
 protected:
     void mousePressEvent(QMouseEvent *e) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent *e) Q_DECL_OVERRIDE;
     void timerEvent(QTimerEvent *e) Q_DECL_OVERRIDE;
+    void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+    void keyReleaseEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
 
     void initializeGL() Q_DECL_OVERRIDE;
     void resizeGL(int w, int h) Q_DECL_OVERRIDE;

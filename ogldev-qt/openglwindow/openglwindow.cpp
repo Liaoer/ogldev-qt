@@ -1,7 +1,6 @@
 #include "openglwindow/openglwindow.h"
 
 
-
 //! [1]
 OpenGLWindow::OpenGLWindow(QWindow *parent)
     : QWindow(parent)
@@ -9,6 +8,7 @@ OpenGLWindow::OpenGLWindow(QWindow *parent)
     , m_animating(false)
     , m_context(0)
     , m_device(0)
+    , angularSpeed(0)
 {
     setSurfaceType(QWindow::OpenGLSurface);
 }
@@ -113,5 +113,3 @@ void OpenGLWindow::setAnimating(bool animating)
         renderLater();
 }
 
-
-//! [5]

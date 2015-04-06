@@ -1,4 +1,7 @@
 #include "trianglewindow.h"
+#include "base/camera.h"
+
+Camera GameCamera;
 
 //构造函数，只是给一些成员变量一些初始值，毛用都没有
 TriangleWindow::TriangleWindow()

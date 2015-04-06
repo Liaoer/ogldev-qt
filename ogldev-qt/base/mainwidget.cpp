@@ -4,7 +4,7 @@
 
 #include <math.h>
 
-MainWidget::MainWidget()
+MainWidget::MainWidget(QWindow *parent)
 {
 
 }
@@ -57,14 +57,39 @@ void MainWidget::timerEvent(QTimerEvent *)
         update();
     }
 }
-//! [1]
 
-void MainWidget::initializeGL()
+void MainWidget::keyPressEvent(QKeyEvent *event)
 {
 
 }
 
-//! [3]
+void MainWidget::keyReleaseEvent(QKeyEvent *event)
+{
+
+}
+
+void MainWidget::initializeGL()
+{
+    initializeOpenGLFunctions();
+
+    glClearColor(0, 0, 0, 1);
+
+    initShaders();
+    initTextures();
+
+    // Enable depth buffer
+    glEnable(GL_DEPTH_TEST);
+
+    // Enable back face culling
+    glEnable(GL_CULL_FACE);
+
+    //geometries = new GeometryEngine;
+
+    // Use QBasicTimer because its faster than QTimer
+    timer.start(12, this);
+}
+
+
 void MainWidget::initShaders()
 {
     // Compile vertex shader
