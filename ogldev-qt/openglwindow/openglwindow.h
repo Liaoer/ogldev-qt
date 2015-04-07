@@ -5,9 +5,6 @@
 #include <QtGui/QWindow>
 #include <QtGui/QOpenGLFunctions>
 #include <QtCore/QCoreApplication>
-#include <QVector2D>
-#include <QBasicTimer>
-#include <QQuaternion>
 #include <QtGui/QOpenGLContext>
 #include <QtGui/QOpenGLPaintDevice>
 #include <QtGui/QPainter>
@@ -50,11 +47,6 @@ private:
     QOpenGLContext *m_context;
     QOpenGLPaintDevice *m_device;
 
-    QBasicTimer timer;
-    QVector2D mousePressPosition;
-    QVector3D rotationAxis;
-    qreal angularSpeed;
-    QQuaternion rotation;
 };
 //! [1]
 #endif // OPENGLWINDOW_H
