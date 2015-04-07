@@ -9,6 +9,7 @@
 #include <QtGui/QOpenGLPaintDevice>
 #include <QtGui/QPainter>
 
+
 QT_BEGIN_NAMESPACE
 class QPainter;
 class QOpenGLContext;
@@ -36,7 +37,6 @@ public slots:
 
 protected:
     bool event(QEvent *event) Q_DECL_OVERRIDE;
-
     void exposeEvent(QExposeEvent *event) Q_DECL_OVERRIDE;
 
 private:
@@ -46,7 +46,6 @@ private:
 
     QOpenGLContext *m_context;
     QOpenGLPaintDevice *m_device;
-
 };
 //! [1]
 #endif // OPENGLWINDOW_H

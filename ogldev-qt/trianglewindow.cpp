@@ -1,5 +1,6 @@
 #include "trianglewindow.h"
 #include "base/camera.h"
+#include <QMouseEvent>
 
 Camera GameCamera;
 
@@ -120,8 +121,9 @@ void TriangleWindow::render()
     matrix.perspective(60.0f, 4.0f/3.0f, 0.1f, 100.0f);
     matrix.translate(0, 0, -2);
     matrix.scale(1.0);
-    matrix.lookAt(CameraPos,CameraTarget,CameraUp);
-    matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0, 1, 0);
+    //matrix.lookAt(CameraPos,CameraTarget,CameraUp);
+    matrix.lookAt(GameCamera.GetPos(), GameCamera.GetTarget(), GameCamera.GetUp());
+    //matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0, 1, 0);
 
     m_program->setUniformValue(m_matrixUniform, matrix);
 
@@ -141,4 +143,26 @@ void TriangleWindow::render()
     ++m_frame;
 }
 
+void TriangleWindow::mousePressEvent(QMouseEvent *e)
+{
+}
 
+void TriangleWindow::mouseReleaseEvent(QMouseEvent *e)
+{
+
+}
+
+void TriangleWindow::timerEvent(QTimerEvent *)
+{
+
+}
+
+void TriangleWindow::keyPressEvent(QKeyEvent *event)
+{
+    GameCamera.OnKeyboard(event->key());
+}
+
+void TriangleWindow::keyReleaseEvent(QKeyEvent *event)
+{
+
+}
