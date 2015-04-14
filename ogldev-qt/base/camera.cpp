@@ -1,4 +1,5 @@
 #include "camera.h"
+#include <math.h>
 
 const static float StepScale = 0.1f;
 
@@ -14,13 +15,56 @@ Camera::~Camera()
 
 }
 
-Camera::Camera(const QVector3D& Pos, const QVector3D& Target, const QVector3D& Up)
+Camera::Camera(int WindowWidth, int WindowHeight,const QVector3D& Pos, const QVector3D& Target, const QVector3D& Up)
 {
+    m_windowWidth  = WindowWidth;
+    m_windowHeight = WindowHeight;
     m_pos    = Pos;
     m_target = Target;
     m_target.normalize();
     m_up     = Up;
     m_up.normalize();
+
+    Init();
+}
+
+void Camera::Init()
+{
+   QVector3D HTarget = QVector3D(m_target.x(), 0.0, m_target.z()); // 水平target向量
+   HTarget.normalize();
+
+   if(HTarget.z()>0.0f){
+       if(HTarget.x()>0.0f){
+           m_AngleH = 360.0f - ToDegree(asin(HTarget.z()));
+       }else{
+           m_AngleH = 180.0f + ToDegree(asin(HTarget.z()));
+       }
+   }else
+   {
+       if (HTarget.x() >= 0.0f)
+       {
+           m_AngleH = ToDegree(asin(-HTarget.z()));
+       }
+       else
+       {
+           m_AngleH = 90.0f + ToDegree(asin(-HTarget.z()));
+       }
+   }
+
+   m_AngleV = -ToDegree(asin(m_target.y()));
+
+   m_OnUpperEdge = false;
+   m_OnLowerEdge = false;
+   m_OnLeftEdge  = false;
+   m_OnRightEdge = false;
+   m_mousePos.setX(m_windowWidth / 2);
+   m_mousePos.setY(m_windowHeight / 2);
+
+}
+
+void Camera::Update()
+{
+
 }
 
 bool Camera::OnKeyboard(int Key)

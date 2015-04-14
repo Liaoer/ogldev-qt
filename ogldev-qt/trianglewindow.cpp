@@ -2,6 +2,9 @@
 #include "base/camera.h"
 #include <QMouseEvent>
 
+#define WINDOW_WIDTH  1366
+#define WINDOW_HEIGHT 768
+
 Camera GameCamera;
 
 //构造函数，只是给一些成员变量一些初始值，毛用都没有
