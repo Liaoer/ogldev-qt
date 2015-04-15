@@ -20,7 +20,8 @@ SOURCES += main.cpp \
     utility.cpp \
     base/camera.cpp \
     base/mainwidget.cpp \
-    trianglewindow.cpp
+    trianglewindow.cpp \
+    base/math_3d.cpp
 
 HEADERS  += \
     openglwindow/openglwindow.h \

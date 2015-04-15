@@ -146,6 +146,11 @@ void TriangleWindow::render()
     ++m_frame;
 }
 
+void TriangleWindow::mouseMoveEvent(QMouseEvent * e)
+{
+
+}
+
 void TriangleWindow::mousePressEvent(QMouseEvent *e)
 {
 }

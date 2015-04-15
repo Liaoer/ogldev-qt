@@ -13,6 +13,8 @@ public:
     Camera(int WindowWidth, int WindowHeight,const QVector3D& Pos, const QVector3D& Target, const QVector3D& Up);
 
     bool OnKeyboard(int Key);
+    void OnMouse(int x, int y);
+    void OnRender();
 
     const QVector3D& GetPos() const
     {

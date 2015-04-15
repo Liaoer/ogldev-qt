@@ -25,6 +25,7 @@ public:
     void initVBO();
     void CreateIndexBuffer();
 protected:
+    void mouseMoveEvent(QMouseEvent * e) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *e) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent *e) Q_DECL_OVERRIDE;
     void timerEvent(QTimerEvent *e) Q_DECL_OVERRIDE;
