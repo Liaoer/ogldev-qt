@@ -3,7 +3,7 @@
 
 #include <QVector3D>
 #include <QVector2D>
-#include "utility.h"
+#include "base/math_3d.h"
 
 class Camera
 {

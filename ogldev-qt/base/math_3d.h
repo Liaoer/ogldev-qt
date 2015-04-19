@@ -28,9 +28,6 @@
 #include <math.h>
 #endif
 
-#include <vector3.h>
-#include <matrix3x3.h>
-#include <matrix4x4.h>
 
 #include "utility.h"
 
