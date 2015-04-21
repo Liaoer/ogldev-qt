@@ -285,7 +285,7 @@ void BaseImporter::GetExtensionList(std::set<std::string>& extensions)
 	return false;
 }
 
-#include "../contrib/ConvertUTF/ConvertUTF.h"
+#include "contrib/ConvertUTF/ConvertUTF.h"
 
 // ------------------------------------------------------------------------------------------------
 void ReportResult(ConversionResult res)

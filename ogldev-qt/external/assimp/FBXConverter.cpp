@@ -47,7 +47,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <iterator>
 #include <sstream>
-#include <boost/tuple/tuple.hpp>
+#include "BoostWorkaround/boost/tuple/tuple.hpp"
 
 #include "FBXParser.h"
 #include "FBXConverter.h"

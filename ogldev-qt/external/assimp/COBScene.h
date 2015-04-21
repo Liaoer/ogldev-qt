@@ -44,7 +44,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef INCLUDED_AI_COB_SCENE_H
 #define INCLUDED_AI_COB_SCENE_H
 
-#include <boost/shared_ptr.hpp>
+#include "BoostWorkaround/boost/shared_ptr.hpp"
 #include "BaseImporter.h"
 
 namespace Assimp	{

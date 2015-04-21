@@ -142,7 +142,7 @@ namespace Assimp
 
 #if ASSIMP_BLEND_WITH_POLY_2_TRI
 
-#include "../contrib/poly2tri/poly2tri/poly2tri.h"
+#include "contrib/poly2tri/poly2tri/poly2tri.h"
 
 namespace Assimp
 {

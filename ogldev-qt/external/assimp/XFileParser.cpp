@@ -56,7 +56,7 @@ using namespace Assimp::XFile;
 #	ifdef ASSIMP_BUILD_NO_OWN_ZLIB
 #		include <zlib.h>
 #	else
-#		include "../contrib/zlib/zlib.h"
+#		include "contrib/zlib/zlib.h"
 #	endif
 
 // Magic identifier for MSZIP compressed data

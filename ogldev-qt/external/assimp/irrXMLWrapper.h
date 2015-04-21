@@ -42,7 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define INCLUDED_AI_IRRXML_WRAPPER
 
 // some long includes ....
-#include "./../contrib/irrXML/irrXML.h"
+#include "contrib/irrXML/irrXML.h"
 #include "./../include/assimp/IOStream.hpp"
 namespace Assimp	{
 

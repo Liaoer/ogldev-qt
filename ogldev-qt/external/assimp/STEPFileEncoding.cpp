@@ -45,7 +45,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "STEPFileEncoding.h"
 #include "fast_atof.h"
 
-#include "../contrib/ConvertUTF/ConvertUTF.h"
+#include "contrib/ConvertUTF/ConvertUTF.h"
 
 using namespace Assimp;
 

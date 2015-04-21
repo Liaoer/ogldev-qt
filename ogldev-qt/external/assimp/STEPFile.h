@@ -41,7 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef INCLUDED_AI_STEPFILE_H
 #define INCLUDED_AI_STEPFILE_H
 
-#include <boost/noncopyable.hpp>
+#include "BoostWorkaround/boost/noncopyable.hpp"
 #include <bitset>
 #include <memory>
 #include <typeinfo>

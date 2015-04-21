@@ -78,11 +78,11 @@ void Camera::Update()
         Haxis.Normalize();
         View.Rotate(m_AngleV, Haxis);
 
-        m_target = View;
-        m_target.Normalize();
+        //m_target = View;
+        //m_target.Normalize();
 
-        m_up = m_target.Cross(Haxis);
-        m_up.Normalize();
+        //m_up = m_target.Cross(Haxis);
+        //m_up.Normalize();
 }
 
 void Camera::OnMouse(int x, int y)

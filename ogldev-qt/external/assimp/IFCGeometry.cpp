@@ -49,8 +49,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "PolyTools.h"
 #include "ProcessHelper.h"
 
-#include "../contrib/poly2tri/poly2tri/poly2tri.h"
-#include "../contrib/clipper/clipper.hpp"
+#include "contrib/poly2tri/poly2tri/poly2tri.h"
+#include "contrib/clipper/clipper.hpp"
 
 #include <iterator>
 
