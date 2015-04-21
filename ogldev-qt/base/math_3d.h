@@ -21,6 +21,9 @@
 
 
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
 #ifdef WIN32
 #define _USE_MATH_DEFINES
 #include <cmath>
