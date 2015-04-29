@@ -5,7 +5,7 @@
 #define WINDOW_WIDTH  1366
 #define WINDOW_HEIGHT 768
 
-Camera GameCamera;
+Camera* pGameCamera = NULL;
 
 //构造函数，只是给一些成员变量一些初始值，毛用都没有
 TriangleWindow::TriangleWindow()
@@ -15,6 +15,7 @@ TriangleWindow::TriangleWindow()
     , c_vbo(0)
 {
     setTitle("qt_ogldev");
+    pGameCamera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
 
@@ -99,6 +100,7 @@ void TriangleWindow::initialize()
 //该函数是渲染部分，每帧都会调用
 void TriangleWindow::render()
 {
+    pGameCamera->OnRender();
     const qreal retinaScale = devicePixelRatio();
     //视口大小，可以理解为整个GL绘制区域占总窗口的多大，一般就是鸡巴0,0,到 窗口宽高了
     glViewport(0, 0, width() * retinaScale, height() * retinaScale);
@@ -125,8 +127,8 @@ void TriangleWindow::render()
     matrix.translate(0, 0, -2);
     matrix.scale(1.0);
     //matrix.lookAt(CameraPos,CameraTarget,CameraUp);
-    matrix.lookAt(GameCamera.GetPos(), GameCamera.GetTarget(), GameCamera.GetUp());
-    matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0, 1, 0);
+    matrix.lookAt(pGameCamera->GetPos(), pGameCamera->GetTarget(), pGameCamera->GetUp());
+    //matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0, 1, 0);
 
     m_program->setUniformValue(m_matrixUniform, matrix);
 
@@ -148,7 +150,9 @@ void TriangleWindow::render()
 
 void TriangleWindow::mouseMoveEvent(QMouseEvent * e)
 {
-
+    printf("%d\n1",e->x());
+    printf("%d\n2",e->y());
+    pGameCamera->OnMouse(e->x(),e->y());
 }
 
 void TriangleWindow::mousePressEvent(QMouseEvent *e)
@@ -167,7 +171,7 @@ void TriangleWindow::timerEvent(QTimerEvent *)
 
 void TriangleWindow::keyPressEvent(QKeyEvent *event)
 {
-    GameCamera.OnKeyboard(event->key());
+    pGameCamera->OnKeyboard(event->key());
 }
 
 void TriangleWindow::keyReleaseEvent(QKeyEvent *event)

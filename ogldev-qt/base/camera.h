@@ -8,7 +8,7 @@
 class Camera
 {
 public:
-    Camera();
+    Camera(int WindowWidth, int WindowHeight);
     ~Camera();
     Camera(int WindowWidth, int WindowHeight,const QVector3D& Pos, const QVector3D& Target, const QVector3D& Up);
 

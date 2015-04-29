@@ -5,11 +5,16 @@ const static float STEP_SCALE = 0.1f;
 const static float EDGE_STEP = 0.5f;
 const static int MARGIN = 10;
 
-Camera::Camera()
+Camera::Camera(int WindowWidth, int WindowHeight)
 {
+    m_windowWidth  = WindowWidth;
+    m_windowHeight = WindowHeight;
     m_pos    = QVector3D(0.0f, 0.0f, 0.0f);
     m_target = QVector3D(0.0f, 0.0f, 1.0f);
+    m_target.normalize();
     m_up     = QVector3D(0.0f, 1.0f, 0.0f);
+
+    Init();
 }
 
 Camera::~Camera()
@@ -69,20 +74,20 @@ void Camera::Update()
     const QVector3D Vaxis = QVector3D(0.0f, 1.0f, 0.0f);
 
     // Rotate the view vector by the horizontal angle around the vertical axis
-    /*QMatrix4x4 View = QMatrix4x4(1.0f, 0.0f, 0.0f,1.0f);
-    View.rotate(m_AngleH, Vaxis);
-    View.normalize();
+    /*Vector3f View(1.0f, 0.0f, 0.0f);
+    View.Rotate(m_AngleH, Vaxis);
+    View.Normalize();
 
     // Rotate the view vector by the vertical angle around the horizontal axis
-    QVector3D Haxis = QVector3D::crossProduct(Vaxis,View);
-    Haxis.normalize();
-    View.rotate(m_AngleV, Haxis);
+    Vector3f Haxis = Vaxis.Cross(View);
+    Haxis.Normalize();
+    View.Rotate(m_AngleV, Haxis);
 
     m_target = View;
-    m_target.normalize();
+    m_target.Normalize();
 
-    m_up = QVector3D::crossProduct(m_target,Haxis);
-    m_up.normalize();*/
+    m_up = m_target.Cross(Haxis);
+    m_up.Normalize();*/
 }
 
 void Camera::OnMouse(int x, int y)
@@ -120,7 +125,7 @@ void Camera::OnMouse(int x, int y)
     m_OnUpperEdge = false;
     m_OnLowerEdge = false;
     }
-    Update();
+    //Update();
 }
 
 bool Camera::OnKeyboard(int Key)
