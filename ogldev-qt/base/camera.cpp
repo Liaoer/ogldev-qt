@@ -71,10 +71,10 @@ void Camera::Init()
 
 void Camera::Update()
 {
-    const QVector3D Vaxis = QVector3D(0.0f, 1.0f, 0.0f);
-
+    //const QVector3D Vaxis = QVector3D(0.0f, 1.0f, 0.0f);
+    const Vector3f Vaxis(0.0f, 1.0f, 0.0f);
     // Rotate the view vector by the horizontal angle around the vertical axis
-    /*Vector3f View(1.0f, 0.0f, 0.0f);
+    Vector3f View(1.0f, 0.0f, 0.0f);
     View.Rotate(m_AngleH, Vaxis);
     View.Normalize();
 
@@ -83,11 +83,21 @@ void Camera::Update()
     Haxis.Normalize();
     View.Rotate(m_AngleV, Haxis);
 
-    m_target = View;
-    m_target.Normalize();
+    QVector3D tmpView;
+    tmpView.setX(View.x);
+    tmpView.setY(View.y);
+    tmpView.setZ(View.z);
 
-    m_up = m_target.Cross(Haxis);
-    m_up.Normalize();*/
+    QVector3D tmpHaxis;
+    tmpHaxis.setX(Haxis.x);
+    tmpHaxis.setY(Haxis.y);
+    tmpHaxis.setZ(Haxis.z);
+
+    m_target = tmpView;
+    m_target.normalize();
+
+    m_up = QVector3D::crossProduct(m_target,tmpHaxis);
+    m_up.normalize();
 }
 
 void Camera::OnMouse(int x, int y)
