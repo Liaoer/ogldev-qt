@@ -180,7 +180,12 @@ SOURCES += main.cpp \
     external/assimp/contrib/zlib/inflate.c \
     external/assimp/contrib/zlib/inftrees.c \
     external/assimp/contrib/zlib/trees.c \
-    external/assimp/contrib/zlib/zutil.c
+    external/assimp/contrib/zlib/zutil.c \
+    external/SOIL/image_DXT.c \
+    external/SOIL/image_helper.c \
+    external/SOIL/SOIL.c \
+    external/SOIL/stb_image_aug.c \
+    texture/texture.cpp
 
 HEADERS  += \
     openglwindow/openglwindow.h \
@@ -438,7 +443,14 @@ HEADERS  += \
     external/include/assimp/vector2.h \
     external/include/assimp/vector3.h \
     external/include/assimp/version.h \
-    external/assimp/revision.h
+    external/assimp/revision.h \
+    external/SOIL/image_DXT.h \
+    external/SOIL/image_helper.h \
+    external/SOIL/SOIL.h \
+    external/SOIL/stb_image_aug.h \
+    external/SOIL/stbi_DDS_aug.h \
+    external/SOIL/stbi_DDS_aug_c.h \
+    texture/texture.h
 
 RESOURCES += \
     shader.qrc
