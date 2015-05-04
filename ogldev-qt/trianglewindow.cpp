@@ -29,7 +29,7 @@ void TriangleWindow::initVBO()
     //先创建一个vbo对象，创建成功后,m_vbo的值就会被修改成一个对象索引，诸如1,2,3,4之类
     glGenBuffers (1,&m_vbo);
     //切记Opengl是状态机，我们要先绑定这个VBO,参数GL_ARRAY_BUFFER的意思就是告诉我们，
-    //这个鸡巴VBO是用来给顶点存放数据的.
+    //VBO是用来给顶点存放数据的.
     glBindBuffer (GL_ARRAY_BUFFER,m_vbo);
 
 
@@ -102,13 +102,13 @@ void TriangleWindow::render()
 {
     pGameCamera->OnRender();
     const qreal retinaScale = devicePixelRatio();
-    //视口大小，可以理解为整个GL绘制区域占总窗口的多大，一般就是鸡巴0,0,到 窗口宽高了
+    //视口大小，可以理解为整个GL绘制区域占总窗口的多大，一般就是0,0,到 窗口宽高了
     glViewport(0, 0, width() * retinaScale, height() * retinaScale);
 
     //gl的清除函数，因为每帧绘制的内容都不一样，所以要把上一帧的数据给清除了.
     glClear(GL_COLOR_BUFFER_BIT);
 
-    //因为鸡巴可以有好几份的shader，所以我们必须要指明我们用的是哪份shader
+    //可以有好几份的shader，所以我们必须要指明我们用的是哪份shader
     m_program->bind();
 
     //传一个矩阵给shader，这里我们让矩阵根据时间变化进行了rotate，
