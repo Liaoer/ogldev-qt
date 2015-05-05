@@ -111,12 +111,13 @@ unsigned int
 		const char *filename,
 		int force_channels,
 		unsigned int reuse_texture_ID,
-		unsigned int flags
+        unsigned int flags,
+        int *width, int *height
 	)
 {
 	/*	variables	*/
 	unsigned char* img;
-	int width, height, channels;
+    int channels;
 	unsigned int tex_id;
 	/*	does the user want direct uploading of the image as a DDS file?	*/
 	if( flags & SOIL_FLAG_DDS_LOAD_DIRECT )
