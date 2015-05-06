@@ -1,11 +1,13 @@
 #include "trianglewindow.h"
 #include "base/camera.h"
+#include "texture/texture.h"
 #include <QMouseEvent>
 
 #define WINDOW_WIDTH  1366
 #define WINDOW_HEIGHT 768
 
 Camera* pGameCamera = NULL;
+Texture* pTexture = NULL;
 
 //构造函数，只是给一些成员变量一些初始值，毛用都没有
 TriangleWindow::TriangleWindow()
@@ -121,6 +123,8 @@ void TriangleWindow::render()
     CameraPos = QVector3D(1.0f, 1.0f, -3.0f);
     CameraTarget = QVector3D(0.45f, 0.0f, 1.0f);
     CameraUp = QVector3D(0.0f, 1.0f, 0.0f);
+
+    pTexture = new Texture("./res/texture/dummy.png");
 
     QMatrix4x4 matrix;
     matrix.perspective(60.0f, 4.0f/3.0f, 0.1f, 100.0f);

@@ -53,9 +53,9 @@ float fmax(float a, float b);
 
 #define SAFE_DELETE(p) if (p) { delete p; p = NULL; }
 
-#include <external/include/assimp/vector3.h>
-#include <external/include/assimp/matrix3x3.h>
-#include <external/include/assimp/matrix4x4.h>
+#include <base/vector3.h>
+#include <base/matrix3x3.h>
+#include <base/matrix4x4.h>
 
 #include "utility.h"
 
