@@ -22,12 +22,7 @@ SOURCES += main.cpp \
     base/mainwidget.cpp \
     trianglewindow.cpp \
     base/math_3d.cpp \
-    external/SOIL/image_DXT.c \
-    external/SOIL/image_helper.c \
-    external/SOIL/SOIL.c \
-    external/SOIL/stb_image_aug.c \
-    texture/texture.cpp \
-    texture/texturepool.cpp
+    texture/texture.cpp
 
 HEADERS  += \
     openglwindow/openglwindow.h \
@@ -36,14 +31,7 @@ HEADERS  += \
     base/camera.h \
     base/mainwidget.h \
     trianglewindow.h \
-    external/SOIL/image_DXT.h \
-    external/SOIL/image_helper.h \
-    external/SOIL/SOIL.h \
-    external/SOIL/stb_image_aug.h \
-    external/SOIL/stbi_DDS_aug.h \
-    external/SOIL/stbi_DDS_aug_c.h \
     texture/texture.h \
-    texture/texturepool.h \
     base/matrix3x3.h \
     base/matrix4x4.h \
     base/vector3.h \
@@ -52,7 +40,8 @@ HEADERS  += \
     base/Compiler/pushpack1.h
 
 RESOURCES += \
-    shader.qrc
+    shader.qrc \
+    textures.qrc
 
 DISTFILES +=
 

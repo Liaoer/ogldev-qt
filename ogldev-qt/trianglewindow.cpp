@@ -7,6 +7,12 @@
 #define WINDOW_WIDTH  1366
 #define WINDOW_HEIGHT 768
 
+struct VertexData
+{
+    QVector3D position;
+    QVector2D texCoord;
+};
+
 Camera* pGameCamera = NULL;
 Texture* pTexture = NULL;
 //构造函数，只是给一些成员变量一些初始值，毛用都没有
@@ -19,20 +25,6 @@ TriangleWindow::TriangleWindow()
     setTitle("qt_ogldev");
     pGameCamera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT);
 }
-
-struct Vertex
-{
-    QVector3D m_pos;
-    QVector2D m_tex;
-
-    Vertex() {}
-
-    Vertex(QVector3D pos, QVector2D tex)
-    {
-        m_pos = pos;
-        m_tex = tex;
-    }
-};
 
 //初始化VBO，VBO可以看作是显卡上一块显存空间的指针，我们通过它把一些不经常变动的数据，
 //上传到显卡上，这样好处是减少对显卡传输的数据的负载，减少显卡占用带宽.
@@ -47,10 +39,13 @@ void TriangleWindow::initVBO()
     //VBO是用来给顶点存放数据的.
     glBindBuffer (GL_ARRAY_BUFFER,m_vbo);
 
-    Vertex vertices[4] = { Vertex(QVector3D(-1.0f, -1.0f, 0.5773f), QVector2D(0.0f, 0.0f)),
-                               Vertex(QVector3D(0.0f, -1.0f, -1.15475f), QVector2D(0.5f, 0.0f)),
-                               Vertex(QVector3D(1.0f, -1.0f, 0.5773f),  QVector2D(1.0f, 0.0f)),
-                               Vertex(QVector3D(0.0f, 1.0f, 0.0f),      QVector2D(0.5f, 1.0f)) };
+
+    VertexData vertices[] = {
+        {QVector3D(-1.0f, -1.0f, 0.5773f), QVector2D(0.0f, 0.0f)},
+        {QVector3D(0.0f, -1.0f, -1.15475f), QVector2D(0.5f, 0.0f)},
+        {QVector3D(1.0f, -1.0f, 0.5773f),  QVector2D(1.0f, 0.0f)},
+        {QVector3D(0.0f, 1.0f, 0.0f),      QVector2D(0.5f, 1.0f)}
+    };
 
     //下面的数组是一个顶点的坐标，三位一组，表示一个三角形的顶点.
     /*GLfloat vertices[] = {
@@ -59,6 +54,7 @@ void TriangleWindow::initVBO()
         1.0f, -1.0f, 0.7f,
         0.0f, 1.0f, 0.0f
      };*/
+
     GLfloat colors[] = {
         1.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f,
@@ -68,7 +64,7 @@ void TriangleWindow::initVBO()
     //把如上表示的数据，上传到m_vbo在显卡占用的内存中.
     glBufferData(GL_ARRAY_BUFFER,sizeof(vertices),vertices,GL_STATIC_DRAW);
     //注意最后一个参数是0，因为最后的这个地址，是根据在该VBO的内存空间里计算的，我们只存了顶点,
-    //没几把存别的，所以以零开始，三位一组.
+    //没存别的，所以以零开始，三位一组.
     glEnableVertexAttribArray(m_posAttr);
     glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
@@ -80,7 +76,6 @@ void TriangleWindow::initVBO()
     //给对应的顶点属性数组指定数据
     glVertexAttribPointer(m_colAttr,3, GL_FLOAT, GL_FALSE, 0, 0);
 
-    glBindTexture(GL_TEXTURE_2D, 0);
     CreateIndexBuffer();
 }
 
@@ -107,9 +102,8 @@ void TriangleWindow::loadShader()
     m_posAttr = m_program->attributeLocation("posAttr"); // 绑定和获取一个顶点属性的位置
     m_colAttr = m_program->attributeLocation("colAttr");
     m_matrixUniform = m_program->uniformLocation("matrix");
-    gSampler = m_program->uniformLocation("gSampler");
-    assert(gSampler != 0xFFFFFFFF);
-    glUniform1i(gSampler, 0);
+    m_textureUniform = m_program->uniformLocation("texture");
+
 }
 
 void TriangleWindow::initialize()
@@ -117,8 +111,6 @@ void TriangleWindow::initialize()
     pTexture = new Texture("test.png");
     loadShader();
     initVBO();
-
-
 }
 //! [4]
 
@@ -134,6 +126,8 @@ void TriangleWindow::render()
     //gl的清除函数，因为每帧绘制的内容都不一样，所以要把上一帧的数据给清除了.
     glClear(GL_COLOR_BUFFER_BIT);
 
+    pTexture->texture->bind();
+
     //可以有好几份的shader，所以我们必须要指明我们用的是哪份shader
     m_program->bind();
 
@@ -143,8 +137,8 @@ void TriangleWindow::render()
     glEnable(GL_CULL_FACE);
     //glDisable(GL_CULL_FACE);
 
-    glFrontFace(GL_CW);
-    glCullFace(GL_BACK);
+    //glFrontFace(GL_CW);
+    //glCullFace(GL_BACK);
 
     CameraPos = QVector3D(1.0f, 1.0f, -3.0f);
     CameraTarget = QVector3D(0.45f, 0.0f, 1.0f);
@@ -160,6 +154,7 @@ void TriangleWindow::render()
     //matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0, 1, 0);
 
     m_program->setUniformValue(m_matrixUniform, matrix);
+    m_program->setUniformValue(m_textureUniform, 0);
 
     //glBindVertexArray(m_vao);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
