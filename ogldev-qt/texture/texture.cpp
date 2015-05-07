@@ -3,6 +3,7 @@
 
 Texture::Texture(const char *textureFileName)
 {
+    printf("%p",textureFileName);
     initializeOpenGLFunctions();
     this->texture_id = SOIL_load_OGL_texture(textureFileName,0,0,0,&m_width,&m_height);
     initTexture();

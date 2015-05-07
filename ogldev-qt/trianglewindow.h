@@ -41,6 +41,7 @@ private:
     GLuint m_posAttr;
     GLuint m_colAttr;
     GLuint m_matrixUniform;
+    GLuint gSampler;
 
     QOpenGLShaderProgram *m_program;
     int m_frame;

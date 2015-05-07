@@ -2,13 +2,13 @@
 #include "base/camera.h"
 #include "texture/texture.h"
 #include <QMouseEvent>
+#include <assert.h>
 
 #define WINDOW_WIDTH  1366
 #define WINDOW_HEIGHT 768
 
 Camera* pGameCamera = NULL;
 Texture* pTexture = NULL;
-
 //构造函数，只是给一些成员变量一些初始值，毛用都没有
 TriangleWindow::TriangleWindow()
     : m_program(0)
@@ -20,6 +20,19 @@ TriangleWindow::TriangleWindow()
     pGameCamera = new Camera(WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
+struct Vertex
+{
+    QVector3D m_pos;
+    QVector2D m_tex;
+
+    Vertex() {}
+
+    Vertex(QVector3D pos, QVector2D tex)
+    {
+        m_pos = pos;
+        m_tex = tex;
+    }
+};
 
 //初始化VBO，VBO可以看作是显卡上一块显存空间的指针，我们通过它把一些不经常变动的数据，
 //上传到显卡上，这样好处是减少对显卡传输的数据的负载，减少显卡占用带宽.
@@ -34,14 +47,18 @@ void TriangleWindow::initVBO()
     //VBO是用来给顶点存放数据的.
     glBindBuffer (GL_ARRAY_BUFFER,m_vbo);
 
+    Vertex vertices[4] = { Vertex(QVector3D(-1.0f, -1.0f, 0.5773f), QVector2D(0.0f, 0.0f)),
+                               Vertex(QVector3D(0.0f, -1.0f, -1.15475f), QVector2D(0.5f, 0.0f)),
+                               Vertex(QVector3D(1.0f, -1.0f, 0.5773f),  QVector2D(1.0f, 0.0f)),
+                               Vertex(QVector3D(0.0f, 1.0f, 0.0f),      QVector2D(0.5f, 1.0f)) };
 
     //下面的数组是一个顶点的坐标，三位一组，表示一个三角形的顶点.
-    GLfloat vertices[] = {
+    /*GLfloat vertices[] = {
         -1.0f, -1.0f, 0.7f,
         0.0f, -1.0f, -1.0f,
         1.0f, -1.0f, 0.7f,
         0.0f, 1.0f, 0.0f
-     };
+     };*/
     GLfloat colors[] = {
         1.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f,
@@ -63,6 +80,7 @@ void TriangleWindow::initVBO()
     //给对应的顶点属性数组指定数据
     glVertexAttribPointer(m_colAttr,3, GL_FLOAT, GL_FALSE, 0, 0);
 
+    glBindTexture(GL_TEXTURE_2D, 0);
     CreateIndexBuffer();
 }
 
@@ -89,12 +107,18 @@ void TriangleWindow::loadShader()
     m_posAttr = m_program->attributeLocation("posAttr"); // 绑定和获取一个顶点属性的位置
     m_colAttr = m_program->attributeLocation("colAttr");
     m_matrixUniform = m_program->uniformLocation("matrix");
+    gSampler = m_program->uniformLocation("gSampler");
+    assert(gSampler != 0xFFFFFFFF);
+    glUniform1i(gSampler, 0);
 }
 
 void TriangleWindow::initialize()
 {
+    pTexture = new Texture("test.png");
     loadShader();
     initVBO();
+
+
 }
 //! [4]
 
@@ -119,12 +143,13 @@ void TriangleWindow::render()
     glEnable(GL_CULL_FACE);
     //glDisable(GL_CULL_FACE);
 
+    glFrontFace(GL_CW);
+    glCullFace(GL_BACK);
 
     CameraPos = QVector3D(1.0f, 1.0f, -3.0f);
     CameraTarget = QVector3D(0.45f, 0.0f, 1.0f);
     CameraUp = QVector3D(0.0f, 1.0f, 0.0f);
 
-    pTexture = new Texture("./res/texture/dummy.png");
 
     QMatrix4x4 matrix;
     matrix.perspective(60.0f, 4.0f/3.0f, 0.1f, 100.0f);
@@ -154,8 +179,6 @@ void TriangleWindow::render()
 
 void TriangleWindow::mouseMoveEvent(QMouseEvent * e)
 {
-    printf("%d\n1",e->x());
-    printf("%d\n2",e->y());
     pGameCamera->OnMouse(e->x(),e->y());
 }
 
