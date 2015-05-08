@@ -103,6 +103,7 @@ void TriangleWindow::loadShader()
     m_colAttr = m_program->attributeLocation("colAttr");
     m_matrixUniform = m_program->uniformLocation("matrix");
     m_textureUniform = m_program->uniformLocation("texture");
+    m_textCood = m_program->attributeLocation("a_texcoord");
 
 }
 
