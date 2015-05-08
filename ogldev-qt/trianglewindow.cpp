@@ -44,7 +44,7 @@ void TriangleWindow::initVBO()
         {QVector3D(-1.0f, -1.0f, 0.5773f), QVector2D(0.0f, 0.0f)},
         {QVector3D(0.0f, -1.0f, -1.15475f), QVector2D(0.5f, 0.0f)},
         {QVector3D(1.0f, -1.0f, 0.5773f),  QVector2D(1.0f, 0.0f)},
-        {QVector3D(0.0f, 1.0f, 0.0f),      QVector2D(0.5f, 1.0f)}
+        {QVector3D(0.0f, 1.0f, 0.0f),   QVector2D(0.5f, 1.0f)}
     };
 
     //下面的数组是一个顶点的坐标，三位一组，表示一个三角形的顶点.
@@ -63,10 +63,20 @@ void TriangleWindow::initVBO()
     };
     //把如上表示的数据，上传到m_vbo在显卡占用的内存中.
     glBufferData(GL_ARRAY_BUFFER,sizeof(vertices),vertices,GL_STATIC_DRAW);
+
+    // Offset for position
+    quintptr offset = 0;
+
     //注意最后一个参数是0，因为最后的这个地址，是根据在该VBO的内存空间里计算的，我们只存了顶点,
     //没存别的，所以以零开始，三位一组.
     glEnableVertexAttribArray(m_posAttr);
-    glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, offset, 0);
+
+    // Offset for texture coordinate
+    offset += sizeof(QVector3D);
+
+    glEnableVertexAttribArray(m_textCood);
+    glVertexAttribPointer(m_textCood,2,GL_FLOAT,GL_FALSE,offset,0);
 
     glGenBuffers(1,&c_vbo);
     glBindBuffer (GL_ARRAY_BUFFER,c_vbo);
@@ -75,6 +85,8 @@ void TriangleWindow::initVBO()
     glEnableVertexAttribArray(m_colAttr);
     //给对应的顶点属性数组指定数据
     glVertexAttribPointer(m_colAttr,3, GL_FLOAT, GL_FALSE, 0, 0);
+
+
 
     CreateIndexBuffer();
 }
@@ -138,8 +150,8 @@ void TriangleWindow::render()
     glEnable(GL_CULL_FACE);
     //glDisable(GL_CULL_FACE);
 
-    //glFrontFace(GL_CW);
-    //glCullFace(GL_BACK);
+    glFrontFace(GL_CW);
+    glCullFace(GL_BACK);
 
     CameraPos = QVector3D(1.0f, 1.0f, -3.0f);
     CameraTarget = QVector3D(0.45f, 0.0f, 1.0f);
@@ -152,7 +164,7 @@ void TriangleWindow::render()
     matrix.scale(1.0);
     //matrix.lookAt(CameraPos,CameraTarget,CameraUp);
     matrix.lookAt(pGameCamera->GetPos(), pGameCamera->GetTarget(), pGameCamera->GetUp());
-    //matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0, 1, 0);
+    matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0, 1, 0);
 
     m_program->setUniformValue(m_matrixUniform, matrix);
     m_program->setUniformValue(m_textureUniform, 0);
