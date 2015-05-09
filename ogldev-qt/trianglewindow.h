@@ -50,6 +50,7 @@ private:
     //GLuint m_vao;
     GLuint c_vbo;
     GLuint IBO;
+    GLuint a_vbo;
 
     QBasicTimer timer;
     QVector2D mousePressPosition;

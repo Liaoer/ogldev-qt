@@ -53,7 +53,14 @@ void TriangleWindow::initVBO()
         0.0f, -1.0f, -1.0f,
         1.0f, -1.0f, 0.7f,
         0.0f, 1.0f, 0.0f
+     };
+    GLfloat cood[] = {
+        0.0f, 0.0f,
+        0.5f, 0.0f,
+        1.0f, 0.0,
+        0.5f, 1.0f
      };*/
+
 
     GLfloat colors[] = {
         1.0f, 0.0f, 0.0f,
@@ -70,13 +77,16 @@ void TriangleWindow::initVBO()
     //注意最后一个参数是0，因为最后的这个地址，是根据在该VBO的内存空间里计算的，我们只存了顶点,
     //没存别的，所以以零开始，三位一组.
     glEnableVertexAttribArray(m_posAttr);
-    glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, offset, 0);
+    glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), 0);
 
     // Offset for texture coordinate
     offset += sizeof(QVector3D);
 
+    //glGenBuffers(1,&a_vbo);
+    //glBindBuffer(GL_ARRAY_BUFFER,a_vbo);
+    glBufferData(GL_ARRAY_BUFFER,sizeof(vertices),vertices,GL_STATIC_DRAW);
     glEnableVertexAttribArray(m_textCood);
-    glVertexAttribPointer(m_textCood,2,GL_FLOAT,GL_FALSE,offset,0);
+    glVertexAttribPointer(m_textCood,2,GL_FLOAT,GL_FALSE,sizeof(VertexData),(const void *)offset);
 
     glGenBuffers(1,&c_vbo);
     glBindBuffer (GL_ARRAY_BUFFER,c_vbo);
@@ -150,8 +160,8 @@ void TriangleWindow::render()
     glEnable(GL_CULL_FACE);
     //glDisable(GL_CULL_FACE);
 
-    glFrontFace(GL_CW);
-    glCullFace(GL_BACK);
+    //glFrontFace(GL_CW);
+    //glCullFace(GL_BACK);
 
     CameraPos = QVector3D(1.0f, 1.0f, -3.0f);
     CameraTarget = QVector3D(0.45f, 0.0f, 1.0f);
