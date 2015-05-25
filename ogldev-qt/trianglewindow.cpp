@@ -149,7 +149,7 @@ void TriangleWindow::render()
     //gl的清除函数，因为每帧绘制的内容都不一样，所以要把上一帧的数据给清除了.
     glClear(GL_COLOR_BUFFER_BIT);
 
-    pTexture->texture->bind();
+    pTexture->m_qtexture->bind();
 
     //可以有好几份的shader，所以我们必须要指明我们用的是哪份shader
     m_program->bind();
