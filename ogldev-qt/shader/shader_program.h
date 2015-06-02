@@ -1,0 +1,24 @@
+#ifndef SHADER_PROGRAM_H
+#define SHADER_PROGRAM_H
+
+#include <QOpenGLFunctions_3_0>
+class ShaderProgram : protected QOpenGLFunctions_3_0
+{
+public:
+    ShaderProgram(const char* pVSFileName, const char* pFSFileName);
+    void use();
+    int getShaderId();
+    void setUniformInteger(const char* str, int value);
+    void setUniformMat4v(const char* str, const GLfloat *array, bool transpose = false, int count = 1);
+    void setUniformFloat(const char* str, float value);
+    void setUniform3Float(const char* str, float x, float y, float z);
+    void setUniform3Float(const char* str, QVector3D v);
+    void setUniform2Float(const char* str, float x, float y);
+    void setUniform4Float(const char* str, float x, float y, float z, float w);
+    
+private:
+    void AddShader(GLuint ShaderProam, const char* pShaderText, GLenum ShaderType);
+    ~ShaderProgram();
+};
+
+#endif // SHADER_PROGRAM_H

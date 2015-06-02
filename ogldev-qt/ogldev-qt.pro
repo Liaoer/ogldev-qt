@@ -23,7 +23,9 @@ SOURCES += main.cpp \
     trianglewindow.cpp \
     base/math_3d.cpp \
     texture/texture.cpp \
-    base/vertexdata.cpp
+    base/vertexdata.cpp \
+    shader/shaderpool.cpp \
+    shader/shader_program.cpp
 
 HEADERS  += \
     openglwindow/openglwindow.h \
@@ -39,7 +41,9 @@ HEADERS  += \
     base/Compiler/poppack1.h \
     base/Compiler/pstdint.h \
     base/Compiler/pushpack1.h \
-    base/vertexdata.h
+    base/vertexdata.h \
+    shader/shaderpool.h \
+    shader/shader_program.h
 
 RESOURCES += \
     shader.qrc \
