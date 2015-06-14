@@ -1,5 +1,4 @@
 #include "mesh.h"
-#include "texture/texturepool.h"
 
 Mesh::Mesh()
 {
@@ -14,7 +13,7 @@ void Mesh::pushVertex(VertexData vertex)
     this->vertices.push_back(vertex);
 }
 
-void Mesh::pushVertex(VertexData *vertex. int size)
+void Mesh::pushVertex(VertexData *vertex, int size)
 {
     for(int i=0; i<size; i++)
     {
@@ -68,7 +67,7 @@ static void CaculateTangent(GLushort *indices, int  indices_count, VertexData *v
         auto Edge1 = v1.position - v0.position;
         auto Edge2 = v2.position - v0.position;
 
-        float DeltaU1 = v1.texCood,x() - v0.texCood.x();
+        float DeltaU1 = v1.texCoord.x() - v0.texCoord.x();
         float DeltaV1 = v1.texCoord.y() - v0.texCoord.y();
         float DeltaU2 = v2.texCoord.x() - v0.texCoord.x();
         float DeltaV2 = v2.texCoord.y() - v0.texCoord.y();
