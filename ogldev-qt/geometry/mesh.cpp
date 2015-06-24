@@ -98,3 +98,4 @@ static void CaculateTangent(GLushort *indices, int  indices_count, VertexData *v
 }
 
 
+
