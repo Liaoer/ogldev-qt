@@ -10,7 +10,7 @@
 #include "base/bonedata.h"
 
 class Mesh: protected QGLFunctions
-{
+{e
 public:
     Mesh();
     void pushVertex(VertexData vertex);
@@ -29,7 +29,10 @@ public:
     MeshDrawComand *getCommand();
     Material *getMaterial() const;
     void setMaterial(Material *value);
+    AABB aabb() const;
+    void setAabb(const AABB &aabb);
 private:
+    AABB m_aabb;
     Material *material;
     MeshDrawComand draw_command;
     GLuint vbo[3];

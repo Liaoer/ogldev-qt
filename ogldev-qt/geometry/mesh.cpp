@@ -97,5 +97,123 @@ static void CaculateTangent(GLushort *indices, int  indices_count, VertexData *v
     }
 }
 
+void Mesh::finishWithoutNormal()
+{
+    initializeGLFunctions();
+    if(!vbo[0])
+    {
+        glGenBuffers(2, vbo);
+    }
+    
+    CaculateNormalLine(&this->indice[0],this->indices.size(),&this->vertices[0],this->vertices.size());
+    
+    CaculateTangent(&this->indices[0],this->indices.size(),&this->vertices[0],this->vertices.size());
+    
+    glBindBuffer(GL_ARRAY_BUFFER,vbo[0]);
+    glBufferData(GL_ARRAY_BUFFER,vertices.size() * sizeof(VertexData), &vertices[0], GL_STATIC_DRAW);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(GLushort), &indices[0], GL_STATIC_DRAW);
+    if(!this->material->getDiffuse()->texture)
+    {
+        this->material->getDiffuse()->texture = TexturePool::getInstance()->createOrGetTexture("default");
+    }
+    for(int i=0; i<vertices.size(); i++)
+    {
+        m_aabb.update(&vertices[i].position, 1);
+    }
+    draw_command.Init(this->material, vbo[1], indices.size());
+}
 
+void Mesh::setBones(std::vector<BoneData> bones)
+{
+    this->m_bones = bones;
+    for(int i =0; i<bones.size(); i++)
+    {
+        for(i=0; j<4; j++)
+        {
+            this->vertices[i].boneId[j] = bones[i].IDs[j];
+            this->vertices[i].boneWeight[j] = bones[i].weights[j];
+        }
+    }
+}
 
+void Mesh::finish()
+{
+    initializeGLFunctions();
+    
+    glGenBuffers(3, vbo);
+    
+    //vertices
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(VertexData), &vertices[0], GL_STATIC_DRAW);
+    //indices
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(GLushort), &indices[0],GL_STATIC_DRAW);
+    
+    //bone
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
+    glBufferData(GL_ARRAY_BUFFER,sizeof(BoneData)*m_bones.size(),&m_bones[0],GL_STATIC_DRAW);
+    
+     if(!this->material->getDiffuse()->texture)
+    {
+        this->material->getDiffuse()->texture = TexturePool::getInstance()->createOrGetTexture("default");
+    }
+    draw_command.m_bones = this->m_bones;
+    draw_command.Init(this->material,vbo[0],vbo[1],vbo[2],indices.size());
+}
+
+void Mesh::checkIndexValid(int index)
+{
+    
+}
+
+void Mesh::draw()
+{
+    draw_command.Draw();
+}
+
+int Mesh::getVerticesNumber()
+{
+    return this->vertices.size();
+}
+
+VertexData *Mesh::at(int index)
+{
+    return &this->vertices[index];
+}
+
+GLuint Mesh::getVerticesVbo()
+{
+    return this->vbo[0];
+}
+
+GLuint Mesh::getIndicesVbo()
+{
+    return this->vbo[1];
+}
+
+MeshDrawCommand *Mesh::getCommand()
+{
+    return &(this->draw_command);
+}
+
+Material *Mesh::getMaterial() const
+{
+    return material;
+}
+
+void Mesh::setMaterial(Material *value)
+{
+    material = value;
+}
+
+AABB Mesh::aabb() const
+{
+    return m_aabb;
+}
+
+void Mesh::setAabb(const AABB &aabb)
+{
+    m_aabb = aabb;
+}
