@@ -174,7 +174,7 @@ void TriangleWindow::render()
     matrix.scale(1.0);
     //matrix.lookAt(CameraPos,CameraTarget,CameraUp);
     matrix.lookAt(pGameCamera->GetPos(), pGameCamera->GetTarget(), pGameCamera->GetUp());
-    matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0, 1, 0);
+    //matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0, 1, 0);
 
     m_program->setUniformValue(m_matrixUniform, matrix);
     m_program->setUniformValue(m_textureUniform, 0);
