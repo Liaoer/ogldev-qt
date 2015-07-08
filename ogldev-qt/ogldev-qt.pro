@@ -24,12 +24,6 @@ SOURCES += main.cpp \
     base/math_3d.cpp \
     texture/texture.cpp \
     base/vertexdata.cpp \
-    shader/shaderpool.cpp \
-    shader/shader_program.cpp \
-    geometry/mesh.cpp \
-    material/material.cpp \
-    material/materialchannel.cpp \
-    material/materialpool.cpp \
     external/SOIL/image_DXT.c \
     external/SOIL/image_helper.c \
     external/SOIL/SOIL.c \
@@ -50,18 +44,12 @@ HEADERS  += \
     base/Compiler/pstdint.h \
     base/Compiler/pushpack1.h \
     base/vertexdata.h \
-    shader/shaderpool.h \
-    shader/shader_program.h \
     external/SOIL/image_DXT.h \
     external/SOIL/image_helper.h \
     external/SOIL/SOIL.h \
     external/SOIL/stb_image_aug.h \
     external/SOIL/stbi_DDS_aug.h \
     external/SOIL/stbi_DDS_aug_c.h \
-    geometry/mesh.h \
-    material/material.h \
-    material/materialchannel.h \
-    material/materialpool.h
 
 RESOURCES += \
     shader.qrc \
