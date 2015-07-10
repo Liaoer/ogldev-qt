@@ -26,7 +26,9 @@ SOURCES += main.cpp \
     external/SOIL/image_helper.c \
     external/SOIL/SOIL.c \
     external/SOIL/stb_image_aug.c \
-    backend/openglwindow.cpp
+    backend/openglwindow.cpp \
+    backend/backend.cpp \
+    base/RendererDelegate.cpp
 
 HEADERS  += \
     base/math_3d.h \
@@ -48,7 +50,9 @@ HEADERS  += \
     external/SOIL/stbi_DDS_aug.h \
     external/SOIL/stbi_DDS_aug_c.h \
     backend/openglwindow.h \
-    base/node.h
+    base/node.h \
+    backend/backend.h \
+    base/RendererDelegate.h
 
 RESOURCES += \
     shader.qrc \
