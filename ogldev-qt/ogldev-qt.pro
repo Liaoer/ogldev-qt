@@ -16,21 +16,19 @@ DEFINES += "M_PI=3.14159265358979323846"
 DEFINES += "M_PI_2=1.57079632679489661923"
 
 SOURCES += main.cpp \
-    openglwindow/openglwindow.cpp \
     utility.cpp \
     base/camera.cpp \
     base/mainwidget.cpp \
     trianglewindow.cpp \
     base/math_3d.cpp \
     texture/texture.cpp \
-    base/vertexdata.cpp \
     external/SOIL/image_DXT.c \
     external/SOIL/image_helper.c \
     external/SOIL/SOIL.c \
-    external/SOIL/stb_image_aug.c
+    external/SOIL/stb_image_aug.c \
+    backend/openglwindow.cpp
 
 HEADERS  += \
-    openglwindow/openglwindow.h \
     base/math_3d.h \
     utility.h \
     base/camera.h \
@@ -43,13 +41,14 @@ HEADERS  += \
     base/Compiler/poppack1.h \
     base/Compiler/pstdint.h \
     base/Compiler/pushpack1.h \
-    base/vertexdata.h \
     external/SOIL/image_DXT.h \
     external/SOIL/image_helper.h \
     external/SOIL/SOIL.h \
     external/SOIL/stb_image_aug.h \
     external/SOIL/stbi_DDS_aug.h \
     external/SOIL/stbi_DDS_aug_c.h \
+    backend/openglwindow.h \
+    base/node.h
 
 RESOURCES += \
     shader.qrc \

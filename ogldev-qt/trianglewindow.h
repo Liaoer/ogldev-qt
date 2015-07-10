@@ -1,7 +1,7 @@
 #ifndef TRIANGLEWINDOW_H
 #define TRIANGLEWINDOW_H
 
-#include "openglwindow/openglwindow.h"
+#include "backend/openglwindow.h"
 
 #include <QtGui/QGuiApplication>
 #include <QtGui/QMatrix4x4>
