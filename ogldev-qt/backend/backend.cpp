@@ -3,7 +3,7 @@
 #include <QLabel>
 
 #ifndef QT_NO_OPENGL
-#include "openglwindow.h"
+#include "trianglewindow.h"
 #endif
 
 int backend::start(RenderDelegate *delegate, int argc, char *argv[])
